@@ -14,7 +14,7 @@ from gw2db.auths.accounts import _Gw2AccountAchievement, _Gw2AccountBankUpgrade,
 from gw2db.common import Base, Param
 
 
-class TestGw2Endpoint(TestCase):
+class TestGw2Db(TestCase):
 
     def setUp(self):
         if os.path.isfile('gw2.db'):

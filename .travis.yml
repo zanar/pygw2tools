@@ -8,4 +8,5 @@ python:
 install: "pip install sqlalchemy requests tzlocal"
 
 # command to run tests
-script: unittests
+script:
+    - python3 all_test.py
