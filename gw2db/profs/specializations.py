@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""specializations enpoint mapping
-
-This module gives access to v2/specializations enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/specializations>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/specializations/specializations.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String, Boolean
@@ -30,6 +23,11 @@ from gw2db.common import Base, endpoint_def
 
 class Gw2Specialization(Base):
     """Map the specializations endpoint
+
+    This class gives access to v2/specializations enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/specializations
+        - https://github.com/arenanet/api-cdi/blob/master/v2/specializations/specializations.js
 
     This endpoint shows information about specializations
     """

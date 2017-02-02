@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""worlds enpoint mapping
-
-This module gives access to v2/worlds enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/worlds>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/worlds.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String, Boolean
@@ -30,6 +23,11 @@ from gw2db.common import Base, endpoint_def, rel_json, col_json
 
 class Gw2World(Base):
     """Map the worlds endpoint
+
+    This class gives access to v2/worlds enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/worlds
+        - https://github.com/arenanet/api-cdi/blob/master/v2/worlds.js
 
     This endpoint shows information about server worlds
     """

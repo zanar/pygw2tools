@@ -17,8 +17,7 @@
 
 The gw2db package provides an ORM over SQLite mapper for GuildWars2 WebAPI.
 
-The entry point is ``Gw2Db``
-It also provides
+The entry point is ``Gw2Db``.
 """
 
 from .auths import Gw2Account, Gw2Character, Gw2Guild, Gw2Token

@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""colors enpoint mapping
-
-This module gives access to v2/colors enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/colors>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/colors.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String, Float
@@ -58,6 +51,11 @@ class _Gw2DyeDetail(Base):
 
 class Gw2Dye(Base):
     """Map the colors endpoint
+
+    This class gives access to v2/colors enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/colors
+        - https://github.com/arenanet/api-cdi/blob/master/v2/colors.js
 
     This endpoint shows information about a dye
     """

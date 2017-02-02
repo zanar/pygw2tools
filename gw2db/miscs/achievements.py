@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""achievements enpoint mapping
-
-This module gives access to v2/achievements enpoint and its subendpoints.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/achievements> and achievements/*
-    <https://github.com/arenanet/api-cdi/blob/master/v2/achievements>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -163,6 +156,11 @@ class _Gw2AchievementRequires(Base):
 class Gw2Achievement(Base):
     """Map the achievements endpoint
 
+    This class gives access to v2/achievements enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/achievements
+        - https://github.com/arenanet/api-cdi/blob/master/v2/achievements/index.js
+
     This endpoint shows information about achievements
     """
     __tablename__ = "gw2_misc_achievement"
@@ -209,6 +207,11 @@ class _Gw2AchievementCategorization(Base):
 class Gw2AchievementCategory(Base):
     """Map the achievements/categories endpoint
 
+    This class gives access to v2/achievements/categories endpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/achievements/categories
+        - https://github.com/arenanet/api-cdi/blob/master/v2/achievements/categories.js
+
     This endpoint shows information about achievements categories
     """
     __tablename__ = "gw2_misc_achievement_category"
@@ -239,6 +242,11 @@ class _Gw2AchievementGrouping(Base):
 
 class Gw2AchievementGroup(Base):
     """Map the achievements/groups endpoint
+
+    This class gives access to v2/achievements/groups endpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/achievements/groups
+        - https://github.com/arenanet/api-cdi/blob/master/v2/achievements/groups.js
 
     This endpoint shows information about achievements groups
     """

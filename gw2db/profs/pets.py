@@ -14,11 +14,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 
 """pets enpoint mapping
-
-This module gives access to v2/pets enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/pets>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/pets.js>
 """
 
 from sqlalchemy import Column
@@ -29,6 +24,11 @@ from gw2db.common import Base, endpoint_def
 
 class Gw2Pet(Base):
     """Map the Ranger's pets endpoint
+
+    This class gives access to v2/pets enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/pets
+        - https://github.com/arenanet/api-cdi/blob/master/v2/pets.js
 
     This endpoint shows information about pets
     """

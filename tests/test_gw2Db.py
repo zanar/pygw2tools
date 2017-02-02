@@ -41,7 +41,7 @@ class TestGw2Endpoint(TestCase):
         self.eps = [x[0] for x in self.eps]
 
         # to test auths endpoint, put your access token here
-        self.test_key = '07300D20-644D-FD42-A7E5-7F41FEBF4B0972977B45-B167-4145-B8FE-F4638E87E76A'
+        self.test_key = ''
 
     def test___init__properties(self):
         try:

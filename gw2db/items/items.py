@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""skins enpoint mapping
-
-This module gives access to v2/skins enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/items>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/items.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String, Boolean
@@ -73,6 +66,11 @@ class _Gw2InfusionSlot(Base):
 class Gw2Item(Base):
     """Map the items endpoint
 
+    This class gives access to v2/items enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/items
+        - https://github.com/arenanet/api-cdi/blob/master/v2/items.js
+
     This endpoint shows information about items
     """
     __tablename__ = "gw2_item_item"
@@ -111,10 +109,7 @@ class Gw2Item(Base):
 
 
 class Gw2ArmorItem(Gw2Item):
-    """Map the item armors details endpoint
-
-    This endpoint shows information about armors
-    """
+    """Map the item armors details subobject"""
     __tablename__ = "gw2_item_item_armor"
 
     # Columns
@@ -164,10 +159,7 @@ class Gw2ArmorItem(Gw2Item):
 
 
 class Gw2BackItem(Gw2Item):
-    """Map the item backs details subobject
-
-    This endpoint shows information about backs
-    """
+    """Map the item backs details subobject"""
     __tablename__ = "gw2_item_item_back"
 
     # Columns
@@ -214,10 +206,7 @@ class Gw2BackItem(Gw2Item):
 
 
 class Gw2BagItem(Gw2Item):
-    """Map the item bags details endpoint
-
-    This endpoint shows information about bags
-    """
+    """Map the item bags details endpoint"""
     __tablename__ = "gw2_item_item_bag"
 
     # Columns
@@ -237,10 +226,7 @@ class _Gw2ConsumableItemSkin(Base):
 
 
 class Gw2ConsumableItem(Gw2Item):
-    """Map the item consumables details endpoint
-
-    This endpoint shows information about consumables
-    """
+    """Map the item consumables details endpoint"""
     __tablename__ = "gw2_item_item_consumable"
 
     # Columns
@@ -269,10 +255,7 @@ class Gw2ConsumableItem(Gw2Item):
 
 
 class Gw2ContainerItem(Gw2Item):
-    """Map the item containers details endpoint
-
-    This endpoint shows information about containers
-    """
+    """Map the item containers details endpoint"""
     __tablename__ = "gw2_item_item_container"
 
     # Columns
@@ -283,10 +266,7 @@ class Gw2ContainerItem(Gw2Item):
 
 
 class Gw2CraftingMaterialItem(Gw2Item):
-    """Map the item crafting materials details subobject
-
-    This endpoint shows information about crafting materials
-    """
+    """Map the item crafting materials details subobject"""
     __tablename__ = "gw2_item_item_cm"
 
     # Columns
@@ -296,10 +276,7 @@ class Gw2CraftingMaterialItem(Gw2Item):
 
 
 class Gw2GatheringItem(Gw2Item):
-    """Map the item gatherings details subobject
-
-    This endpoint shows information about gatherings
-    """
+    """Map the item gatherings details subobject"""
     __tablename__ = "gw2_item_item_gathering"
 
     # Columns
@@ -310,10 +287,7 @@ class Gw2GatheringItem(Gw2Item):
 
 
 class Gw2GizmoItem(Gw2Item):
-    """Map the item gizmos details subobject
-
-    This endpoint shows information about gizmos
-    """
+    """Map the item gizmos details subobject"""
     __tablename__ = "gw2_item_item_gizmo"
 
     # Columns
@@ -324,10 +298,7 @@ class Gw2GizmoItem(Gw2Item):
 
 
 class Gw2MiniatureItem(Gw2Item):
-    """Map the item minipets details subobject
-
-    This endpoint shows information about minipets
-    """
+    """Map the item minipets details subobject"""
     __tablename__ = "gw2_item_item_miniature"
     __endpoint__ = ''
 
@@ -342,10 +313,7 @@ class Gw2MiniatureItem(Gw2Item):
 
 
 class Gw2SalvageItem(Gw2Item):
-    """Map the item salvages details subobject
-
-    This endpoint shows information about salvages
-    """
+    """Map the item salvages details subobject"""
     __tablename__ = "gw2_item_item_salvage"
 
     # Columns
@@ -356,10 +324,7 @@ class Gw2SalvageItem(Gw2Item):
 
 
 class Gw2TraitItem(Gw2Item):
-    """Map the item traits details subobject
-
-    This endpoint shows information about traits
-    """
+    """Map the item traits details subobject"""
     __tablename__ = "gw2_item_item_trait"
 
     # Columns
@@ -369,10 +334,7 @@ class Gw2TraitItem(Gw2Item):
 
 
 class Gw2TrinketItem(Gw2Item):
-    """Map the item trinkets details subobject
-
-    This endpoint shows information about trinkets
-    """
+    """Map the item trinkets details subobject"""
     __tablename__ = "gw2_item_item_trinket"
     __endpoint__ = ''
 
@@ -423,10 +385,7 @@ class Gw2TrinketItem(Gw2Item):
 
 
 class Gw2UpgradeItem(Gw2Item):
-    """Map the item upgrades details subobject
-
-    This endpoint shows information about upgrades
-    """
+    """Map the item upgrades details subobject"""
     __tablename__ = "gw2_item_item_upgrade"
 
     # Columns
@@ -452,10 +411,7 @@ class Gw2UpgradeItem(Gw2Item):
 
 
 class Gw2WeaponItem(Gw2Item):
-    """Map the item weapons details subobject
-
-    This endpoint shows information about weapons
-    """
+    """Map the item weapons details subobject"""
     __tablename__ = "gw2_item_item_weapon"
 
     # Columns

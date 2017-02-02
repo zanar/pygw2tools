@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""titles enpoint mapping
-
-This module gives access to v2/titles enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/titles>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/titles.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -30,6 +23,11 @@ from gw2db.common import Base, endpoint_def, col_json
 
 class Gw2Title(Base):
     """Map the titles endpoint
+
+    This class gives access to v2/titles enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/titles
+        - https://github.com/arenanet/api-cdi/blob/master/v2/titles.js
 
     This endpoint shows information about titles
     """

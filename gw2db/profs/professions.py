@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""professions enpoint mapping
-
-This module gives access to v2/professions enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/professions>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/professions.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -85,6 +78,11 @@ class _Gw2ProfWeapon(Base):
 
 class Gw2Profession(Base):
     """Map the professions endpoint
+
+    This class gives access to v2/professions enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/professions
+        - https://github.com/arenanet/api-cdi/blob/master/v2/professions.js
 
     This endpoint shows information about professions
     """

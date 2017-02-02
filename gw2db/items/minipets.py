@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""minis enpoint mapping
-
-This module gives access to v2/minis enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/minis>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/minis.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -30,6 +23,11 @@ from gw2db.common import Base, endpoint_def
 
 class Gw2MiniPet(Base):
     """Map the minis endpoint
+
+    This class gives access to v2/minis enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/minis
+        - https://github.com/arenanet/api-cdi/blob/master/v2/minis.js
 
     This endpoint shows information about minipets
     """

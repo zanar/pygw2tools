@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""emblem enpoints mapping
-
-This module gives access to v2/emblem enpoints.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/emblem>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/emblems>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -38,6 +31,11 @@ class _Gw2EmblemForegroundLayer(Base):
 
 class Gw2EmblemForeground(Base):
     """Map the emblem/foregrounds endpoint
+
+    This class gives access to v2/emblem/foregrounds enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/emblem
+        - https://github.com/arenanet/api-cdi/blob/master/v2/emblems/emblems.js
 
     This endpoint shows information about emblems foregrounds
     """
@@ -63,6 +61,11 @@ class _Gw2EmblemBackgroundLayer(Base):
 
 class Gw2EmblemBackground(Base):
     """Map the emblem/backgrounds endpoint
+
+    This class gives access to v2/emblem/backgrounds enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/emblem
+        - https://github.com/arenanet/api-cdi/blob/master/v2/emblems/emblems.js
 
     This endpoint shows information about emblems backgrounds
     """

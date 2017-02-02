@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""characters endpoint mapping
-
-This module gives access to v2/characters enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/characters>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/characters/characters.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import DateTime
@@ -235,6 +228,11 @@ class _Gw2CharacterTrain(Base):
 
 class Gw2Character(Base):
     """Map the characters endpoint
+
+    This class gives access to v2/characters enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/characters
+        - https://github.com/arenanet/api-cdi/blob/master/v2/characters/characters.js
 
     This endpoint shows the informations of a character
     """

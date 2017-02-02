@@ -20,38 +20,18 @@ Provides some generic tools for this package
 """
 
 
-class singleton(object):
-    """Singleton decorator."""
-
-    def __init__(self, cls):
-        self.__dict__['cls'] = cls
-
-    instances = {}
-
-    def __call__(self):
-        if self.cls not in self.instances:
-            self.instances[self.cls] = self.cls()
-        return self.instances[self.cls]
-
-    def __getattr__(self, attr):
-        return getattr(self.__dict__['cls'], attr)
-
-    def __setattr__(self, attr, value):
-        return setattr(self.__dict__['cls'], attr, value)
-
-
 class CbEvent:
     """Callback event handler
 
     Example:
-        # add a callback
-        cb_event += my_cb_func
-
-        # remove a callback
-        cb_event -= my_cb_func
-
-        # fire an event
-        cb_event(..)
+        >>> # add a callback
+        >>> cb_event += my_cb_func
+        >>>
+        >>> # remove a callback
+        >>> cb_event -= my_cb_func
+        >>>
+        >>> # fire an event
+        >>> cb_event(..)
     """
 
     def __init__(self):

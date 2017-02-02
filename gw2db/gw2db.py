@@ -16,7 +16,6 @@
 """Package entry module.
 
 This package provides the "master" class of this package: ``Gw2Db``.
-
 """
 
 # std imports
@@ -44,7 +43,7 @@ from sqlite3 import Connection as SQLite3Connection
 
 # package imports
 from gw2db.common import Base, addr_v2, Gw2Endpoint, Param, EPType
-from gw2db.tools import singleton, CbEvent
+from gw2db.tools import CbEvent
 
 from gw2db.auths import *
 from gw2db.items import *
@@ -91,70 +90,75 @@ def _on_table_mapped(mapper, class_):
 
 @unique
 class DbUpgradeStatus(IntEnum):
-    """Database upgrade status
-
-    Attributes:
-        DbUpgradeStatus.started: the upgrade just started
-        DbUpgradeStatus.downloading: the current datas are backed, starting retrieving new datas
-         DbUpgradeStatus.success: the process ended with success, new datas are available
-         DbUpgradeStatus.error: an error occured during process, the backed datas are restored
-    """
+    """Database upgrade status"""
     started = 1
+    """the upgrade just started"""
+
     downloading = 2
+    """the current datas are backed, starting retrieving new datas"""
+
     success = 3
+    """the process ended with success, new datas are available"""
+
     error = 4
+    """an error occured during process, the backed datas are restored"""
 
 
 @unique
 class EndpointUpgradeStatus(IntEnum):
-    """Endpoint upgrade status
-
-    Attributes:
-        EndpointUpgradeStatus.started: the endpoint upgrade started
-        EndpointUpgradeStatus.downloading: the endpoint manager is downloading / mapping datas
-        EndpointUpgradeStatus.commiting: all datas are mapped, starting to add them in base
-        EndpointUpgradeStatus.success: the endpoint is upgraded successfully
-        EndpointUpgradeStatus.error: an error occured, backed db must be restored
-    """
+    """Endpoint upgrade status"""
     started = 1
+    """the endpoint upgrade started"""
+
     downloading = 2
+    """the endpoint manager is downloading / mapping datas"""
+
     commiting = 3
+    """all datas are mapped, starting to add them in base"""
+
     success = 4
+    """the endpoint is upgraded successfully"""
+
     error = 5
+    """an error occured, backed db must be restored"""
 
 
-@singleton
-class Gw2Db:
+class Gw2Db(object):
     """Package master class
 
     This class manage the database: access, upgrades... It's a singleton class, multipe instanciations return the
     same instance.
 
-    Attributes:
-        self.running_status: a callback event, showing the upgrade status
-                             parameters are: <status (DbUpgradeStatus)>, <nb of endpoints (int)>
-
-        self.endpoint_status: a callback event, showing an endpoint upgrade status
-                              parameters are: <status (EndpointUpgradeStatus)>, <tablename (str)>
-
     Example:
-        with Gw2Db() as db:
-            my_datas db.session.query(...).filter(...).all()
-            # do something with my_datas
+        >>> with Gw2Db() as db:
+        >>>    my_datas = db.session.query(...).filter(...).all()
+        >>>    # do something with my_datas
 
     Warning:
-        - All the gw2_* tables should be considered as "read-only".
+        - All the gw2_* tables must be considered as "read-only".
         - The ``session`` object does NOT have autocommit. You MUST call ``session.commit()`` after any changes to save
-          them. See <http://docs.sqlalchemy.org/en/latest/orm/session_api.html#sqlalchemy.orm.session.Session> for more
+          them. See http://docs.sqlalchemy.org/en/latest/orm/session_api.html#sqlalchemy.orm.session.Session for more
           details about the session object.
     """
-
     __endpoints__ = list()
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Gw2Db, cls).__new__(
+                                cls, *args)
+        return cls._instance
     
     def __init__(self):
         """Initialize the manager"""
         self.running_status = CbEvent()
+        """a callback event, showing the upgrade status
+        parameters are: <status (DbUpgradeStatus)>, <nb of endpoints (int)>
+        """
         self.endpoint_status = CbEvent()
+        """a callback event, showing an endpoint upgrade status
+        parameters are: <status (EndpointUpgradeStatus)>, <tablename (str)>"""
         
         self._db = 'gw2.db'
         self._back = self._db + '.back'

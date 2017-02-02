@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""itemstats enpoint mapping
-
-This module gives access to v2/itemstats enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/itemstats>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/itemstats.js>
-"""
 
 from sqlalchemy import Column
 from sqlalchemy import Integer, String, Float
@@ -29,6 +22,11 @@ from gw2db.common import Base, endpoint_def, col_json
 
 class Gw2Itemstat(Base):
     """Map the itemstats endpoint
+
+    This class gives access to v2/itemstats enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/itemstats
+        - https://github.com/arenanet/api-cdi/blob/master/v2/itemstats.js
 
     This endpoint shows information about items stats
     """

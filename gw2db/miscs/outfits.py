@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""outfits enpoint mapping
-
-This module gives access to v2/outfits enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/outfits>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/outfits.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -38,6 +31,11 @@ class _Gw2OutfitUnlock(Base):
 
 class Gw2Outfit(Base):
     """Map the outfits endpoint
+
+    This class gives access to v2/outfits enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/outfits
+        - https://github.com/arenanet/api-cdi/blob/master/v2/outfits.js
 
     This endpoint shows information about outfits
     """

@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""backstory enpoint mapping
-
-This module gives access to v2/backstory enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/backstory/*>
-    <https://github.com/arenanet/api-cdi/tree/master/v2/backstory>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -30,6 +23,11 @@ from gw2db.common import Base, endpoint_def, col_json
 
 class Gw2BackstoryQuestion(Base):
     """Map the backstory/questions endpoint
+
+    This module gives access to v2/backstory/questions enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/backstory/questions
+        - https://github.com/arenanet/api-cdi/blob/master/v2/backstory/questions.js
 
     This endpoint shows information about backstory questions
     """
@@ -50,6 +48,11 @@ class Gw2BackstoryQuestion(Base):
 
 class Gw2BackstoryAnswer(Base):
     """Map the backstory/answers endpoint
+
+    This module gives access to v2/backstory/answers enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/backstory/answers
+        - https://github.com/arenanet/api-cdi/blob/master/v2/backstory/answers.js
 
     This endpoint shows information about backstory answers
     """

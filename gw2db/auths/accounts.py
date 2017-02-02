@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""account endpoints mapping
-
-This module gives access to v2/account enpoint and its subendpoints
-For more informations about these endpoints, see:
-    <https://wiki.guildwars2.com/wiki/API:2/account> and account/*
-    <https://github.com/arenanet/api-cdi/tree/master/v2/account>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import DateTime
@@ -32,6 +25,11 @@ from gw2db.common import Base, endpoint_def, rel_json, col_json, EPType, gw2_to_
 class Gw2Account(Base):
     """Map the account endpoint
 
+    This class gives access to v2/account enpoint and its subendpoints.
+    For more informations about these endpoints, see:
+        - https://wiki.guildwars2.com/wiki/API:2/account and account/*
+        - https://github.com/arenanet/api-cdi/tree/master/v2/account
+
     This endpoint shows the general informations of an account
     """
     __tablename__ = "gw2_auth_account"
@@ -40,7 +38,8 @@ class Gw2Account(Base):
     id = Column(String, primary_key=True)
     name = Column(String, primary_key=True)
     api_key = Column(String, ForeignKey("gw2_auth_token.api_key"), unique=True, nullable=False)
-    world = Column(Integer, ForeignKey("gw2_misc_world.id"), nullable=False)
+    age = Column(Integer, nullable=False)
+    world_id = Column(Integer, ForeignKey("gw2_misc_world.id"), nullable=False, info=col_json('world'))
     created = Column(DateTime, nullable=False, info=col_json(keys='created', fn=gw2_to_orm_date))
     access = Column(String, nullable=False)
     commander = Column(Boolean, nullable=False)

@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""traits enpoint mapping
-
-This module gives access to v2/traits enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/traits>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/traits/traits.md>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -31,6 +24,11 @@ from gw2db.profs.facts import Gw2Fact
 
 class Gw2Trait(Base):
     """Map the traits endpoint
+
+    This class gives access to v2/traits enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/traits
+        - https://github.com/arenanet/api-cdi/blob/master/v2/traits/traits.md
 
     This endpoint shows information about traits
     """

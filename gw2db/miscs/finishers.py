@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""finishers enpoint mapping
-
-This module gives access to v2/finishers enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/finishers>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/finishers.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -38,6 +31,11 @@ class _Gw2FinisherUnlock(Base):
 
 class Gw2Finisher(Base):
     """Map the finishers endpoint
+
+    This class gives access to v2/finishers enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/finishers
+        - https://github.com/arenanet/api-cdi/blob/master/v2/finishers.js
 
     This endpoint shows information about finishers
     """

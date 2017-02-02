@@ -15,7 +15,8 @@
 
 """Authenticated enpoints table mapping
 
-This subpackage provides classes which map WebAPI endpoints to tables
+This subpackage provides classes which map WebAPI endpoints to tables. To access authenticated endpoints, you need
+an access token provided here: https://account.arena.net/applications.
 
 Here is the list of accessible endpoints from this package:
     - v2/account

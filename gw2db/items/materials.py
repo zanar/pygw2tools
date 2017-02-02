@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""colors enpoint mapping
-
-This module gives access to v2/colors enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/materials>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/materials.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -39,6 +32,11 @@ class _Gw2MaterialItem(Base):
 
 class Gw2Material(Base):
     """Map the materials endpoint
+
+    This class gives access to v2/colors enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/materials
+        - https://github.com/arenanet/api-cdi/blob/master/v2/materials.js
 
     This endpoint shows information about materials
     """

@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""guild/upgrades enpoint mapping
-
-This module gives access to v2/guild/upgrades enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/guild/upgrades>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/guild/upgrades.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -52,6 +45,15 @@ class _Gw2GuildUpgradeCost(Base):
 
 
 class Gw2GuildUpgrade(Base):
+    """Map the guild upgrades endpoint
+
+    This class gives access to v2/guild/upgrades enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/guild/upgrades
+        - https://github.com/arenanet/api-cdi/blob/master/v2/guild/upgrades.js
+
+    This endpoint shows information about guild upgrades
+    """
     __tablename__ = "gw2_item_guild_upgrade"
     __table_args__ = endpoint_def('guild/upgrades', locale=True)
 

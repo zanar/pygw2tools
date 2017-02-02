@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License along with gw2db.
 # If not, see <http://www.gnu.org/licenses/>.
 
-"""guild endpoints mapping
-
-This module gives access to v2/guild/:id enpoint.
-For more informations about this endpoint, see:
-    <https://wiki.guildwars2.com/wiki/API:2/guild/:id>
-    <https://github.com/arenanet/api-cdi/blob/master/v2/guild/details.js>
-"""
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
@@ -48,6 +41,11 @@ class _Gw2GuildEmblemForeColor(Base):
 
 class Gw2Guild(Base):
     """Map the guild/:id endpoint
+
+    This class gives access to v2/guild/:id enpoint.
+    For more informations about this endpoint, see:
+        - https://wiki.guildwars2.com/wiki/API:2/guild/:id
+        - https://github.com/arenanet/api-cdi/blob/master/v2/guild/details.js
 
     This endpoint shows the informations of a guild
     """

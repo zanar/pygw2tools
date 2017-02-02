@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### [Unreleased]
 #### Added
 - ``gw2db`` submodule - first dev
+- unit tests for ``gw2db`` regarding to first dev
+- doc for ``gw2db`` regarding to first dev
 
 
 -----------------------------------
