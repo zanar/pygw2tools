@@ -5,7 +5,9 @@ python:
   - "3.6"
 
 # command to install dependencies
-install: "pip install sqlalchemy requests tzlocal"
+install:
+    - pip install sqlalchemy requests tzlocal
+    - pip install .
 
 # command to run tests
 script:
