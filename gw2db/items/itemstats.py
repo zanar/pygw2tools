@@ -22,7 +22,7 @@ For more informations about this endpoint, see:
 """
 
 from sqlalchemy import Column
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, Float
 
 from gw2db.common import Base, endpoint_def, col_json
 
@@ -39,13 +39,13 @@ class Gw2Itemstat(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
 
-    agony_resistance = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'AgonyResistance']))
-    boon_duration = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'BoonDuration']))
-    condition_damage = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'ConditionDamage']))
-    condition_duration = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'ConditionDuration']))
-    crit_damage = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'CritDamage']))
-    healing = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'Healing']))
-    power = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'Power']))
-    precision = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'Precision']))
-    thoughness = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'Thoughness']))
-    vitality = Column(Integer, nullable=False, default=0, info=col_json(keys=['attributes', 'Vitality']))
+    agony_resistance = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'AgonyResistance']))
+    boon_duration = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'BoonDuration']))
+    condition_damage = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'ConditionDamage']))
+    condition_duration = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'ConditionDuration']))
+    crit_damage = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'CritDamage']))
+    healing = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'Healing']))
+    power = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'Power']))
+    precision = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'Precision']))
+    thoughness = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'Thoughness']))
+    vitality = Column(Float, nullable=False, default=0, info=col_json(keys=['attributes', 'Vitality']))

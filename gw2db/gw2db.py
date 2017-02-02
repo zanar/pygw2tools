@@ -44,7 +44,7 @@ from sqlite3 import Connection as SQLite3Connection
 
 # package imports
 from gw2db.common import Base, addr_v2, Gw2Endpoint, Param, EPType
-from gw2db.tools import Singleton, CbEvent
+from gw2db.tools import singleton, CbEvent
 
 from gw2db.auths import *
 from gw2db.items import *
@@ -53,7 +53,6 @@ from gw2db.profs import *
 from gw2db.story import *
 
 
-# Event function called when db is connected
 @event.listens_for(Engine, "connect")
 def _set_sqlite_pragma(dbapi_connection, connection_record):
     """Event function called when db is connected
@@ -75,7 +74,6 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
         cursor.close()
 
 
-# Event fuction called when a table is mapped into db
 @event.listens_for(Mapper, "mapper_configured")
 def _on_table_mapped(mapper, class_):
     """Event fuction called when all declared tables are mapped into db
@@ -91,7 +89,6 @@ def _on_table_mapped(mapper, class_):
         Gw2Db.__endpoints__.append(class_)
 
 
-# Database upgrade status
 @unique
 class DbUpgradeStatus(IntEnum):
     """Database upgrade status
@@ -108,7 +105,6 @@ class DbUpgradeStatus(IntEnum):
     error = 4
 
 
-# Endpoint upgrade status
 @unique
 class EndpointUpgradeStatus(IntEnum):
     """Endpoint upgrade status
@@ -127,7 +123,7 @@ class EndpointUpgradeStatus(IntEnum):
     error = 5
 
 
-# Package master class
+@singleton
 class Gw2Db:
     """Package master class
 
@@ -152,8 +148,7 @@ class Gw2Db:
           them. See <http://docs.sqlalchemy.org/en/latest/orm/session_api.html#sqlalchemy.orm.session.Session> for more
           details about the session object.
     """
-    __metaclass__ = Singleton
-    
+
     __endpoints__ = list()
     
     def __init__(self):

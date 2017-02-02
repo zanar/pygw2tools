@@ -56,7 +56,6 @@ from sqlalchemy.inspection import inspect
 addr_v2 = 'https://api.guildwars2.com/v2/'
 
 
-# Super class for tables declaration
 class _JsonDeclarativeMeta(DeclarativeMeta):
     """Super class for tables declaration
 
@@ -106,7 +105,6 @@ class _JsonDeclarativeMeta(DeclarativeMeta):
 Base = declarative_base(metaclass=_JsonDeclarativeMeta)
 
 
-# Types of endpoint
 @unique
 class EPType(IntEnum):
     """Types of endpoint
@@ -123,17 +121,17 @@ class EPType(IntEnum):
         EPType.sac: authenticated single child endpoint
         EPType.psac: parametrized authenticated single child endpoint
     """
-    std = 0,
-    child = 1,
-    single = 2,
-    param = 4,
-    auth = 8,
+    std = 1,
+    child = 2,
+    single = 4,
+    param = 8,
+    auth = 16,
 
-    psc = 1 + 2 + 4,  # child + single + param
-    ac = 8 + 1,  # auth + child
-    sa = 8 + 2,  # auth + single
-    sac = 8 + 1 + 2,  # auth + child + single
-    psac = 8 + 7  # auth + psc
+    psc = 2 + 4 + 8,  # child + single + param
+    ac = 16 + 2,  # auth + child
+    sa = 16 + 4,  # auth + single
+    sac = 16 + 2 + 4,  # auth + child + single
+    psac = 16 + 2 + 4 + 8  # auth + psc
 
 
 # Add endpoint definition to a table declaration
@@ -162,7 +160,6 @@ def endpoint_def(endpoint, ep_type=EPType.std, locale=False, workers=5, rights=l
     )
 
 
-# Declare a JSON mapping to a table relationship
 def rel_json(cls_, keys=None, fn=lambda j, pj: j):
     """Declare a JSON mapping to a table relationship
 
@@ -180,7 +177,6 @@ def rel_json(cls_, keys=None, fn=lambda j, pj: j):
     return p
 
 
-# Declare a JSON mapping to a table column
 def col_json(keys=None, fn=lambda j, pj: j):
     """Declare a JSON mapping to a table column
 
@@ -198,7 +194,6 @@ def col_json(keys=None, fn=lambda j, pj: j):
     return p
 
 
-# Convert a JSON string date into a storable datetime
 def gw2_to_orm_date(strdate, pj):
     """Convert a JSON string date into a storable datetime
 
@@ -215,7 +210,6 @@ def gw2_to_orm_date(strdate, pj):
     return d.replace(tzinfo=timezone.utc).astimezone(get_localzone())
 
 
-# WebAPI endpoint manager
 class Gw2Endpoint:
     """WebAPI endpoint manager
 
@@ -297,8 +291,11 @@ class Gw2Endpoint:
         """Make the url arguments, regarding to endpoint definition
 
         :param key: access token value
-        :return: a dictionnary of parameters
+        :return: a list of dictionnary of parameters
         """
+        if (self._type & EPType.auth) != 0 and len(key) == 0:
+            return list()
+
         ua = dict()
 
         if self._locale is not None:
@@ -333,6 +330,8 @@ class Gw2Endpoint:
                 params = None
                 if self._end.is_set():
                     return None
+        if self._err.is_set():
+            return None
 
         urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
         endpoint = self._endpoint
@@ -485,6 +484,9 @@ class Gw2Endpoint:
                 break
 
             for _j in _json:
+                if self._err.is_set():
+                    break
+
                 _map = self._mapping(_j, self._table)
                 if _map is None:
                     if not self._end.is_set():
@@ -580,6 +582,11 @@ class Gw2Endpoint:
             self._pqueue.appendleft('end')
             return
 
+        if (self._type & EPType.auth) != 0 and len(key) == 0:
+            return
+        if (self._type & EPType.param) != 0 and _pjson is None:
+            return
+
         uas = self._make_args(key)
         if len(uas) == 0:
             self.on_error()
@@ -603,7 +610,6 @@ class Gw2Endpoint:
             ch.on_error()
 
 
-# Db table - store applications parameters
 class Param(Base):
     """Db table - store applications parameters
 

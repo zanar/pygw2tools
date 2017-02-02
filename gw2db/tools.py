@@ -20,18 +20,26 @@ Provides some generic tools for this package
 """
 
 
-# Singleton type
-class Singleton(type):
-    """Singleton type, force an unique instance for a class"""
-    _instances = {}
+class singleton(object):
+    """Singleton decorator."""
 
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+    def __init__(self, cls):
+        self.__dict__['cls'] = cls
+
+    instances = {}
+
+    def __call__(self):
+        if self.cls not in self.instances:
+            self.instances[self.cls] = self.cls()
+        return self.instances[self.cls]
+
+    def __getattr__(self, attr):
+        return getattr(self.__dict__['cls'], attr)
+
+    def __setattr__(self, attr, value):
+        return setattr(self.__dict__['cls'], attr, value)
 
 
-# Callback event handler
 class CbEvent:
     """Callback event handler
 
