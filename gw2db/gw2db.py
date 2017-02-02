@@ -63,7 +63,6 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
     :param connection_record: unused parameter
     """
     if isinstance(dbapi_connection, SQLite3Connection):
-        print('pragmas')
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA journal_mode = MEMORY")
         cursor.execute("PRAGMA temp_store = MEMORY")
