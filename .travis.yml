@@ -10,5 +10,4 @@ install:
     - pip install .
 
 # command to run tests
-script:
-    - python all_test.py
+script: "python all_tests.py"
