@@ -280,15 +280,20 @@ class Gw2Endpoint:
             return 0
 
         # urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
-        try:
-            # ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
-            ans = requests.get(addr_v2 + self._endpoint, params=args, timeout=10)
-            s = int(math.ceil(int(ans.headers['x-result-total']) / 200))
-            ans.close()
-            return s
-        except (HTTPError, Timeout, KeyError) as e:
-            self.on_error("Exception when getting size:", e)
-            return -1
+        for i in range(0, 3):
+            try:
+                # ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
+                ans = requests.get(addr_v2 + self._endpoint, params=args, timeout=10)
+                s = int(math.ceil(int(ans.headers['x-result-total']) / 200))
+                ans.close()
+                return s
+            except Timeout:
+                continue
+            except (HTTPError, KeyError) as e:
+                self.on_error("Exception when getting size:", e)
+                return -1
+        self.on_error("Timeout when getting size")
+        return -1
 
     def _make_args(self, key=''):
         """Make the url arguments, regarding to endpoint definition
@@ -344,16 +349,23 @@ class Gw2Endpoint:
             else:
                 endpoint = self._endpoint % params
 
-        try:
-            text = ''
-            # with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
-            with closing(requests.get(addr_v2 + endpoint, params=args, stream=True, timeout=30)) as r:
-                r.raise_for_status()
-                for data in r.iter_content(chunk_size=1024, decode_unicode=True):
-                    text += data
-                r.close()
-        except RequestException as e:
-            self.on_error("Exception while downloading datas:", e)
+        text = ''
+        for i in range(0, 3):
+            try:
+                text = ''
+                # with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
+                with closing(requests.get(addr_v2 + endpoint, params=args, stream=True, timeout=30)) as r:
+                    r.raise_for_status()
+                    for data in r.iter_content(chunk_size=1024, decode_unicode=True):
+                        text += data
+                    r.close()
+            except Timeout:
+                continue
+            except RequestException as e:
+                self.on_error("Exception while downloading datas:", e)
+                return None
+        if len(text) == 0:
+            self.on_error("Timeout while downloading datas")
             return None
 
         _json = json.loads(text)
