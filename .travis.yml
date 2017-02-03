@@ -5,6 +5,7 @@ python:
 # command to install dependencies
 install:
     - pip install sqlalchemy requests tzlocal
+    - pip install pyopenssl ndg-httpsclient pyasn1
     - pip install .
 
 # command to run tests

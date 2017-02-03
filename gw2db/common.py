@@ -279,9 +279,10 @@ class Gw2Endpoint:
         if (self._type & EPType.single) != 0:
             return 0
 
-        urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
+        # urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
         try:
-            ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
+            # ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
+            ans = requests.get(addr_v2 + self._endpoint, params=args, timeout=10)
             return int(math.ceil(int(ans.headers['x-result-total']) / 200))
         except (HTTPError, Timeout, KeyError) as e:
             self.on_error("Exception when getting size:", e)
@@ -333,7 +334,7 @@ class Gw2Endpoint:
         if self._err.is_set():
             return None
 
-        urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
+        # urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
         endpoint = self._endpoint
         if params is not None:
             if type(params) is list:
@@ -343,7 +344,8 @@ class Gw2Endpoint:
 
         try:
             text = ''
-            with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
+            # with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
+            with closing(requests.get(addr_v2 + endpoint, params=args, stream=True, timeout=30)) as r:
                 r.raise_for_status()
                 for data in r.iter_content(chunk_size=64 * 1024, decode_unicode=True):
                     text += data
@@ -393,18 +395,15 @@ class Gw2Endpoint:
         _newj = {}
 
         # check inherited class
-        try:
-            _table = table
-            subc = _table.__subclasses__()
-            if len(subc) > 0:
-                subc.append(_table)
-                switch = _table.__mapper_args__['polymorphic_on'].key
-                for _t in subc:
-                    if _json[switch] == _t.__mapper_args__['polymorphic_identity']:
-                        _table = _t
-                        break
-        except Exception as e:
-            self.on_error("Exception when checking inherited classes", e)
+        _table = table
+        subc = _table.__subclasses__()
+        if len(subc) > 0:
+            subc.append(_table)
+            switch = _table.__mapper_args__['polymorphic_on'].key
+            for _t in subc:
+                if _json[switch] == _t.__mapper_args__['polymorphic_identity']:
+                    _table = _t
+                    break
 
         # mapping columns
         try:
