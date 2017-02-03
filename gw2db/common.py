@@ -347,7 +347,7 @@ class Gw2Endpoint:
             # with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
             with closing(requests.get(addr_v2 + endpoint, params=args, stream=True, timeout=30)) as r:
                 r.raise_for_status()
-                for data in r.iter_content(chunk_size=64 * 1024, decode_unicode=True):
+                for data in r.iter_content(chunk_size=1024, decode_unicode=True):
                     text += data
         except RequestException as e:
             self.on_error("Exception while downloading datas:", e)
