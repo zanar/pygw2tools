@@ -283,8 +283,8 @@ class Gw2Endpoint:
         try:
             ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=5)
             return int(math.ceil(int(ans.headers['x-result-total']) / 200))
-        except (HTTPError, Timeout, KeyError):
-            self.on_error()
+        except (HTTPError, Timeout, KeyError) as e:
+            self.on_error("Exception when getting size:", e)
             return -1
 
     def _make_args(self, key=''):
@@ -347,8 +347,8 @@ class Gw2Endpoint:
                 r.raise_for_status()
                 for data in r.iter_content(chunk_size=64 * 1024, decode_unicode=True):
                     text += data
-        except RequestException:
-            self.on_error()
+        except RequestException as e:
+            self.on_error("Exception while downloading datas:", e)
             return None
 
         _json = json.loads(text)
@@ -393,15 +393,18 @@ class Gw2Endpoint:
         _newj = {}
 
         # check inherited class
-        _table = table
-        subc = _table.__subclasses__()
-        if len(subc) > 0:
-            subc.append(_table)
-            switch = _table.__mapper_args__['polymorphic_on'].key
-            for _t in subc:
-                if _json[switch] == _t.__mapper_args__['polymorphic_identity']:
-                    _table = _t
-                    break
+        try:
+            _table = table
+            subc = _table.__subclasses__()
+            if len(subc) > 0:
+                subc.append(_table)
+                switch = _table.__mapper_args__['polymorphic_on'].key
+                for _t in subc:
+                    if _json[switch] == _t.__mapper_args__['polymorphic_identity']:
+                        _table = _t
+                        break
+        except Exception as e:
+            self.on_error("Exception when checking inherited classes", e)
 
         # mapping columns
         try:
@@ -430,9 +433,8 @@ class Gw2Endpoint:
                     if col.key == 'pkid':
                         _newj[col.key] = self._next_pkid
                         _json[col.key] = _newj[col.key]
-        except:
-            traceback.print_exc()
-            self.on_error()
+        except Exception as e:
+            self.on_error("Mapping " + _table.__name__ + " columns failed:", e)
             return None
 
         if len(_newj) == 0:
@@ -463,9 +465,8 @@ class Gw2Endpoint:
                             mapped.extend(self._mapping(s, rel.info['map'], _json))
                     else:
                         mapped.extend(self._mapping(subj, rel.info['map'], _json))
-        except:
-            traceback.print_exc()
-            self.on_error()
+        except Exception as e:
+            self.on_error("Mapping " + _table.__name__ + " relationships failed:", e)
             return None
 
         return mapped
@@ -480,7 +481,7 @@ class Gw2Endpoint:
             _json = self._read()
             if _json is None:
                 if not self._end.is_set():
-                    self.on_error()
+                    self.on_error("_read returned None")
                 break
 
             for _j in _json:
@@ -490,7 +491,7 @@ class Gw2Endpoint:
                 _map = self._mapping(_j, self._table)
                 if _map is None:
                     if not self._end.is_set():
-                        self.on_error()
+                        self.on_error("_mapping returned None")
                     break
                 for elem in _map:
                     (k, v) = elem
@@ -507,7 +508,7 @@ class Gw2Endpoint:
         if self._type == EPType.std:
             uas = self._make_args()
             if len(uas) == 0:
-                self.on_error()
+                self.on_error("Can't create args?!")
                 return None
             for ua in uas:
                 self._pqueue.appendleft((ua, None, None))
@@ -523,15 +524,14 @@ class Gw2Endpoint:
             my_ths = {my_dl.submit(self._build): i for i in range(0, w)}
             for future in as_completed(my_ths):
                 if future.exception() is not None:
-                    self.on_error()
-                    traceback.print_exc()
+                    self.on_error("Downloading datas raises an exception:", future.exception())
                     continue
                 if self._err.is_set():
                     continue
 
                 datas = future.result()
                 if datas is None:
-                    self.on_error()
+                    self.on_error("Any datas mapped??")
                     continue
 
                 for (_cls, _map) in datas:
@@ -549,15 +549,14 @@ class Gw2Endpoint:
             ch_ths = {ch_dl.submit(x.upgrade): x for x in self._children}
             for future in as_completed(ch_ths):
                 if future.exception() is not None:
-                    self.on_error()
-                    traceback.print_exc()
+                    self.on_error("Child download failed", future.exception())
                     continue
                 if self._err.is_set():
                     continue
 
                 _mapped = future.result()
                 if _mapped is None:
-                    self.on_error()
+                    self.on_error("Child mapping failed")
                     continue
 
                 for k, v in _mapped.items():
@@ -589,7 +588,7 @@ class Gw2Endpoint:
 
         uas = self._make_args(key)
         if len(uas) == 0:
-            self.on_error()
+            self.on_error("Can't make args?!")
             return
 
         if (self._type & EPType.param) != 0:
@@ -603,8 +602,15 @@ class Gw2Endpoint:
 
         self._pqueue.extendleft([(ua, _f_, _pj) for ua in uas for _f_ in format_])
 
-    def on_error(self):
+    def on_error(self, msg='', exc=None):
         """Stop the download / mapping. The ``upgrade`` method will finish with error too"""
+        if len(msg) > 0 and exc is not None:
+            print(self._table.__name__, msg, exc)
+        elif len(msg) > 0:
+            print(self._table.__name__, msg)
+        elif exc is not None:
+            print(self._table.__name__, exc)
+
         self._err.set()
         for ch in self._children:
             ch.on_error()

@@ -150,18 +150,18 @@ class TestGw2Endpoint(TestCase):
     def test_upgrade(self):
         for tep in self.p_eps:
             ep = Gw2Endpoint(tep, 'en', self.c_eps)
-            
+
             if (ep._type & EPType.auth) != 0:
                 if len(self.test_key) > 0:
                     ep.set_params(self.test_key)
-            
+
             if (ep._type & EPType.auth) != 0 and len(self.test_key) == 0:
                 ep.set_params()
                 datas = ep.upgrade()
                 self.assertIsNotNone(datas, ep.table_name)
                 self.assertEquals(len(datas), 0)
                 continue
-                
+
             ep.set_params()
             datas = ep.upgrade()
             self.assertIsNotNone(datas, ep.table_name)

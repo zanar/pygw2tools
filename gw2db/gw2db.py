@@ -191,7 +191,7 @@ class Gw2Db(object):
             _lang = self._session.query(Param).filter(Param.name == 'lang').first().value
             return _lang
         except (SQLAlchemyError, AttributeError):
-            _lang = locale.getdefaultlocale()[0].split('_')[0]
+            _lang = locale.getdefaultlocale(envvars=['LANG'])[0].split('_')[0]
             if _lang not in ['fr', 'de', 'en', 'es']:
                 _lang = 'en'
             self._session.add(Param(name='lang', value=_lang))
