@@ -281,7 +281,7 @@ class Gw2Endpoint:
 
         urlp = '?' + urlencode(args) if args is not None and len(args) > 0 else ''
         try:
-            ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=5)
+            ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
             return int(math.ceil(int(ans.headers['x-result-total']) / 200))
         except (HTTPError, Timeout, KeyError) as e:
             self.on_error("Exception when getting size:", e)
@@ -343,7 +343,7 @@ class Gw2Endpoint:
 
         try:
             text = ''
-            with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=10)) as r:
+            with closing(requests.get(addr_v2 + endpoint + urlp, stream=True, timeout=40)) as r:
                 r.raise_for_status()
                 for data in r.iter_content(chunk_size=64 * 1024, decode_unicode=True):
                     text += data
