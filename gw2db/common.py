@@ -283,7 +283,9 @@ class Gw2Endpoint:
         try:
             # ans = requests.get(addr_v2 + self._endpoint + urlp, timeout=20)
             ans = requests.get(addr_v2 + self._endpoint, params=args, timeout=10)
-            return int(math.ceil(int(ans.headers['x-result-total']) / 200))
+            s = int(math.ceil(int(ans.headers['x-result-total']) / 200))
+            ans.close()
+            return s
         except (HTTPError, Timeout, KeyError) as e:
             self.on_error("Exception when getting size:", e)
             return -1
@@ -349,6 +351,7 @@ class Gw2Endpoint:
                 r.raise_for_status()
                 for data in r.iter_content(chunk_size=1024, decode_unicode=True):
                     text += data
+                r.close()
         except RequestException as e:
             self.on_error("Exception while downloading datas:", e)
             return None
